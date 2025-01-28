@@ -5,7 +5,7 @@ import re
 
 value = np.array([])
 time = np.array([])
-with open("info.txt") as inline:
+with open("info_storage/info.txt") as inline:
        for line in inline:
               line = re.sub(r'\s+', ' ', line)
               info = []

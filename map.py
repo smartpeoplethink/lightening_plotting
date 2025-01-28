@@ -12,7 +12,7 @@ fig, ax = plt.subplots(figsize=(10, 6), subplot_kw={'projection': ccrs.PlateCarr
 latitude = np.array([])
 longitude = np.array([])
 value = np.array([])
-with open("info.txt") as inline:
+with open("info_storage/info.txt") as inline:
        for line in inline:
               line = re.sub(r'\s+', ' ', line)
               info = []
