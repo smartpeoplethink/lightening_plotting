@@ -2,7 +2,9 @@
 import numpy as np
 import re
 
-def fileReader(name, locations):
+def fileReader(name, locations, isint):
+     if len(locations) != len(isint):
+          return False
      lists = []
      for i in locations:
           
@@ -18,8 +20,13 @@ def fileReader(name, locations):
                      if line[currentColumn]==" ":
                         #print(currentIndex)
                         if currentIndex in locations:
-                         #   print(currentdata)
-                            lists[locations.index(currentIndex)] = np.append(lists[locations.index(currentIndex)], currentdata)
+                              print("LAT")
+                              typeIndex = locations.index(currentIndex)
+                              if (isint[typeIndex] == "int"):
+                                   currentdata = int(currentdata)
+                              if (isint[typeIndex] == "flt"):
+                                   currentdata = float(currentdata)
+                              lists[typeIndex] = np.append(typeIndex, currentdata)
                           #  print(lists[locations.index(currentIndex)])
                         currentdata = ""
                         currentColumn+=1
@@ -27,4 +34,5 @@ def fileReader(name, locations):
                      else: 
                             currentdata+=line[currentColumn]
                             currentColumn+=1
+     print(lists[1])
      return lists
