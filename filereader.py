@@ -27,8 +27,7 @@ def fileReader(name, locations, isint):
                               if (isint[typeIndex] == "flt"):
                                    currentdata = float(currentdata)
                               lists[typeIndex] = np.append(lists[typeIndex], currentdata)
-                              if typeIndex == 1:
-                                   print(currentdata)
+                              
                           #  print(lists[locations.index(currentIndex)])
                         currentdata = ""
                         currentColumn+=1
