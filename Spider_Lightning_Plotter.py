@@ -15,12 +15,13 @@ longitude = info[2]
 norm = plt.Normalize(0,60)
 cmap = matplotlib.colors.LinearSegmentedColormap.from_list("", ["red", "orange", "yellow", "green","blue","indigo", "violet"])
 scatter = ax.scatter(longitude, latitude, c=second, cmap=cmap,norm = norm, s=10)
-plt.colorbar(scatter, label='Time is seconds')
+plt.colorbar(scatter, label='Time in seconds')
 
 # Add map features
 ax.add_feature(cfeature.COASTLINE)
 ax.add_feature(cfeature.BORDERS)
 ax.add_feature(cfeature.STATES, linestyle=':')
+
 
 # Set extent to focus on the southeastern US
 ax.set_extent([-82, -81, 25, 26.6])
