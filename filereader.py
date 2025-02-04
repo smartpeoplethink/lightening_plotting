@@ -24,8 +24,11 @@ def fileReader(name, locations, isint):
                               typeIndex = locations.index(currentIndex)
                               if (isint[typeIndex] == "int"):
                                    currentdata = int(currentdata)
+                                   
                               if (isint[typeIndex] == "flt"):
                                    currentdata = float(currentdata)
+
+                              
                               lists[typeIndex] = np.append(lists[typeIndex], currentdata)
                               
                           #  print(lists[locations.index(currentIndex)])

@@ -6,16 +6,33 @@ import numpy as np
 import re
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
+import pprint
+
 file_names = ["50", "51", "52", "53", "54", "54", "55", "56", "57", "58", "59"]
+#file_names = ["test"]
 truncate_seconds = True
 time = []
 latitude = []
 longitude = []
+Ltype = []
+def removeFromListsBasedOnLastList(info):
+    adjusted_index = 0
+    for a in range(len(info[len(info)-1])):
+        if info[len(info)-1][a-adjusted_index] != 0:
+            
+            for num in range(len(info)):
+                info[num] = np.delete(info[num], a-adjusted_index)
+            
+            adjusted_index+=1
+        
+    return info
 
 
 for i in range(len(file_names)):
-    info = filereader.fileReader(file_names[i], [7, 9,10], ["int", "flt","flt"])
-    
+    info = filereader.fileReader(file_names[i], [7, 9,10, 26], ["int", "flt","flt", "int"])
+    #print(info)
+    info = removeFromListsBasedOnLastList(info)       
+    #print(info) 
     if truncate_seconds:
         current_time = [i+50]*len(info[0])
         
@@ -24,6 +41,8 @@ for i in range(len(file_names)):
     time.extend(current_time)
     latitude.extend(info[1])
     longitude.extend(info[2])
+    Ltype.extend(info[3])
+
 #color_set = ["red", "orange", "yellow", "green","blue", "indigo", "violet", "pink", "black", ]
 fig, ax = plt.subplots(figsize=(10, 6), subplot_kw={'projection': ccrs.PlateCarree()})
 
