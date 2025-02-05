@@ -1,0 +1,28 @@
+
+import numpy as np
+import pandas as pd
+import statsmodels.api as sm
+import matplotlib.pyplot as plt
+import statsmodels.formula.api as smf
+
+
+
+FedHistory = pd.read_csv("info_storage/GLM_9_7_filtered2.csv")
+
+
+# Combine both datasets to get variables for historical values into 1 Data Frame
+combinedHistory = pd.merge(FedHistory, FedHistory, on = "minute")
+# Create GENERALIZED LINEAR MODEL
+# formula: Default stands for intercept (dependet vriable) 
+# The intercept is the predicted value of the dependent variables, when all the independent variables /Risk level, YOB, DJX, GDP/ are 0.
+# You can try family Tweedie with its link function log as well in this case
+
+model = smf.glm(data = combinedHistory, 
+                family = sm.families.Binomial())
+
+# Fit the model
+result = model.fit()
+# Display and interpret results
+print(result.summary())
+# Estimated default probabilities
+predictions = result.predict()
