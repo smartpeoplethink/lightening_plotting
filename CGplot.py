@@ -15,24 +15,12 @@ time = []
 latitude = []
 longitude = []
 Ltype = []
-def removeFromListsBasedOnLastList(info):
-    adjusted_index = 0
-    for a in range(len(info[len(info)-1])):
-        if info[len(info)-1][a-adjusted_index] != 0:
-            
-            for num in range(len(info)):
-                info[num] = np.delete(info[num], a-adjusted_index)
-            
-            adjusted_index+=1
-        
-    return info
-
-
+Excluded = []
 for i in range(len(file_names)):
     info = filereader.fileReader(file_names[i], [7, 9,10, 26], ["int", "flt","flt", "int"])
     #print(info)
-    info = removeFromListsBasedOnLastList(info)       
-    #print(info) 
+    info = filereader.removeFromListsBasedOnLastList(info, Excluded)       
+    print(info) 
     if truncate_seconds:
         current_time = [i+50]*len(info[0])
         
