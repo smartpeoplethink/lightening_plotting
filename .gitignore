@@ -3,3 +3,5 @@
 info.csv
 *.png
 /info_storage
+*.exe
+*.obj
