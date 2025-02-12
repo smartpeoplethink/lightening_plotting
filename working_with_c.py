@@ -1,7 +1,7 @@
 import ctypes
 
-# Load the shared library into c types.
-libc = ctypes.CDLL("./calculations.exe")
-counter = libc.add()
+# Load the DLL
+lib = ctypes.CDLL("./mylib.dll")
 
-print(counter)
+# Call the function
+lib.hello()
