@@ -1,5 +1,5 @@
 import filereader
-from matplotlib import animation
+from matplotlib import animation   
 import matplotlib.pyplot as plt
 import matplotlib.colors
 import numpy as np

@@ -7,12 +7,12 @@ import cartopy.feature as cfeature
 
 Included = ["GC", "SL"]
 
-Gradient_Pink = False
+Gradient_Pink = True
 Spider_lightning_name = "Spider_GLM_50_8s_to_52_2s"
 
 Excluded_type_number = []
-file_names = ["50", "51", "52", "53", "54", "54", "55", "56", "57", "58", "59"]
-#file_names = ["test"]
+file_names = ["56", "57"]
+# file_names = ["57_20-58_03"]
 time = []
 lat = []
 long = []
@@ -33,7 +33,7 @@ if Gradient_Pink:
 else:
     graphName = basicName
 for i in range(len(file_names)):
-    info = filereader.fileReader(file_names[i], [7, 9,10, 26], ["int", "flt","flt", "int"])
+    info = filereader.fileReader(file_names[i], [6, 9,10, 26], ["int", "flt","flt", "int"])
 
     if "GC" not in Included:
         info = filereader.removeFromListsBasedOnLastList(info, [0])
@@ -41,7 +41,7 @@ for i in range(len(file_names)):
         info = filereader.removeFromListsBasedOnLastList(info, [1])
     
 
-    time.extend([i+50]*len(info[0]))
+    time.extend(info[0])
     lat.extend(info[1])
     long.extend(info[2])
     Ltype.extend(info[3])
@@ -57,7 +57,7 @@ time = np.array(time)
 # timeSL-=min(timeSL)
 # time -= 50
 # plt.figure(figsize=(10, 5))
-# norm = plt.Normalize(50,59)
+norm = plt.Normalize(50,59)
 # #cmap = matplotlib.colors.LinearSegmentedColormap.from_list("", ["red", "orange", "yellow", "green","blue","indigo", "violet"])
 # plt.scatter(long, lat, norm = norm,label = "IC & GC", c=time,s=10)
 
@@ -74,13 +74,13 @@ ax.add_feature(cfeature.BORDERS, linestyle=":")
 ax.set_extent([-82, -81, 25, 26.6])
 
 # Scatter different datasets with different colors
-C = ax.scatter(long, lat, c = time, label=NonSLname, s=ICandGCplotSize)
+C = ax.scatter(long, lat, c = time, label=NonSLname, norm = norm , s=ICandGCplotSize)
 if "SL" in Included and Gradient_Pink:
     pink_cmap = LinearSegmentedColormap.from_list("pink_gradient", ["pink", "deeppink", "mediumvioletred"])
     SL = ax.scatter(longSL, latSL, cmap = pink_cmap, c = timeSL, label="Spider Lightning", s=SLplotSize)
 elif "SL" in Included:
     SL = ax.scatter(longSL, latSL, color = "pink", label="Spider Lightning", s=SLplotSize)
-
+C = ax.scatter(long, lat, c = time, label=NonSLname, norm = norm , s=ICandGCplotSize)
 # Add legend and title
 plt.legend()
 
