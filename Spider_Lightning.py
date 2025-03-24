@@ -1,6 +1,3 @@
-#55:34.4--55:35.1
-#57:50.8--57:52.2
-
 import filereader
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap

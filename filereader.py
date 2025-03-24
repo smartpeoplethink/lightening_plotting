@@ -13,7 +13,28 @@ def removeFromListsBasedOnLastList(info, Excluded_type_number):
             adjusted_index+=1
         
     return new_info
-
+def Remove(numTest, Threshold, dir):
+     if dir == "eql":
+          if numTest == Threshold:
+               return True
+     if dir == "grtr":
+          if numTest >= Threshold:
+               return True
+     if dir == "less":
+          if numTest <= Threshold:
+               return True
+def removeFromListsBasedOnLastListAndExpression(info, Excluded_type_number, dir = "eql"):
+    adjusted_index = 0
+    new_info = info.copy()
+    for a in range(len(new_info[len(new_info)-1])):
+        
+        if Remove(info[len(info)-1][a],Excluded_type_number, dir):
+          for num in range(len(info)):
+               new_info[num] = np.delete(new_info[num], a-adjusted_index)
+            
+          adjusted_index+=1
+        
+    return new_info
 def fileReader(name, locations, isint):
      if len(locations) != len(isint):
           return False
