@@ -35,6 +35,18 @@ def removeFromListsBasedOnLastListAndExpression(info, Excluded_type_number, dir 
           adjusted_index+=1
         
     return new_info
+def removeBasedOnListAndExpression(info, limiter, Excluded_type_number, dir = "eql"):
+    adjusted_index = 0
+    new_info = info.copy()
+    for a in range(len(limiter)):
+        
+        if Remove(limiter[a-adjusted_index],Excluded_type_number, dir):
+          for num in range(len(info)):
+               new_info[num] = np.delete(new_info[num], a-adjusted_index)
+          limiter = np.delete(limiter, a-adjusted_index)
+          adjusted_index+=1
+        
+    return new_info, limiter
 def fileReader(name, locations, isint):
      if len(locations) != len(isint):
           return False

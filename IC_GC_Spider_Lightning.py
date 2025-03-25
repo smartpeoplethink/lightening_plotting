@@ -1,6 +1,7 @@
 #55:34.4--55:35.1
 #57:50.8--57:52.2
 
+import SpiderLightningHandler
 import filereader
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
@@ -34,10 +35,7 @@ basicName = basicName[:-len(separator)]
 NonSLname = basicName[:]
 if "SL" in basicName:
     NonSLname = basicName[:-(len(separator)+2)]
-if Gradient_Pink:
-    graphName = basicName+" using a gradient pink"
-else:
-    graphName = basicName
+
 for i in range(len(file_names)):
     info = filereader.fileReader(file_names[i], [6,7, 9,10, 26, 19], ["int","int", "flt","flt", "int", "flt"])
 
@@ -60,11 +58,13 @@ for i in range(len(file_names)):
     long.extend(info[3])
     Ltype.extend(info[4])
     Current.extend(info[5])
-spider_lighning_info = filereader.csvReader(Spider_lightning_name, [8,9, 6,7], ["flt", "flt", "flt", "flt"])
-latSL, longSL = spider_lighning_info[0], spider_lighning_info[1]
+graphName, spider_lighning_info = SpiderLightningHandler.SpiderLightning(["flt", "flt", "flt", "flt"], [6,7,8,9], 0, 1000 ,0 ,0)
 
-timeSL = spider_lighning_info[2]+spider_lighning_info[3]
 
+latSL, longSL = spider_lighning_info[2], spider_lighning_info[3]
+
+timeSL = spider_lighning_info[0]+spider_lighning_info[1]
+print(timeSL)
 #make it into a np array
 time = np.array(time)
 #Normalize
@@ -91,6 +91,7 @@ ax.set_extent([-82, -81, 25, 26.6])
 # Scatter different datasets with different colors
 C = ax.scatter(long, lat, c = time, label=NonSLname, norm = norm , s=ICandGCplotSize)
 if "SL" in Included and Gradient_Pink:
+    print(timeSL)
     pink_cmap = LinearSegmentedColormap.from_list("pink_gradient", ["pink", "deeppink", "mediumvioletred"])
     SL = ax.scatter(longSL, latSL, cmap = pink_cmap, c = timeSL, label="Spider Lightning", s=SLplotSize)
 elif "SL" in Included:
