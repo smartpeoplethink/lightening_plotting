@@ -14,21 +14,14 @@ def ICandGC(Included, file_names, StartSeconds, EndSeconds):
     long = []
     Ltype = []
     Current = []
-    SLplotSize = 5
-    ICandGCplotSize = 5
     basicName = ""
     separator = " and "
     for type in Included:
         basicName+=type
         basicName+=separator
     basicName = basicName[:-len(separator)]
-    NonSLname = basicName[:]
-    if "SL" in basicName:
-        NonSLname = basicName[:-(len(separator)+2)]
-
     for i in range(len(file_names)):
-        info = filereader.fileReader(file_names[i], [6,7, 9,10, 26, 19], ["int","int", "flt","flt", "int", "flt"])
-
+        info = filereader.fileReader(file_names[i], [6,7, 9,10, 19, 26], ["int","int", "flt","flt", "flt", "int"])
         if "GC" not in Included:
             info = filereader.removeFromListsBasedOnLastList(info, [0])
         if "IC" not in Included:
@@ -46,6 +39,6 @@ def ICandGC(Included, file_names, StartSeconds, EndSeconds):
         time.extend(info[0])
         lat.extend(info[2])
         long.extend(info[3])
-        Ltype.extend(info[4])
-        Current.extend(info[5])
+        Current.extend(info[4])
+        Ltype.extend(info[5])
     return time, lat, long, Ltype, Current
