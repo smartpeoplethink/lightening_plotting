@@ -1,6 +1,6 @@
-TIME_FRAMEO = ["00:55:34.4","00:55:35.1"]
-TIME_FRAME = ["00:57:50.8", "00:57:52.2"]
-
+TIME_FRAME = ["00:55:34.4","00:55:35.1"]
+TIME_FRAMEO = ["00:57:50.8", "00:57:52.2"]
+#IC = green; CG = Blue
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 import numpy as np
@@ -36,10 +36,10 @@ if IC:
     incl.append("IC")
 print(incl)
 minutes = ["50", "51", "52", "53", "54", "55", "56", "57", "58", "59"]
-minutes = ["54", "55", "56"]
+minutes = ["55", "56"]
 dataICandGC = ICandGCHandler.ICandGC(incl, 
                                      minutes,
-                                       33, 35)
+                                       3, 5)
 time, lat, long, Ltype, Current = dataICandGC
 
 hSL = dataSL["hour"]

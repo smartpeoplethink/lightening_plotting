@@ -7,8 +7,8 @@ import cartopy.feature as cfeature
 import sorter
 
 
-TIME_FRAMEO = ["00:55:34.4","00:55:35.1"]
-TIME_FRAME = ["00:57:50.8", "00:57:52.2"]
+TIME_FRAME = ["00:55:34.4","00:55:35.1"]
+TIME_FRAMEO = ["00:57:50.8", "00:57:52.2"]
 
 
 csv_file = r"C:\Users\Samuel Halperin\OneDrive\Documents\GitHub\lightening_plotting\info_storage\GLM_9_7_filtered2.csv"
@@ -26,7 +26,7 @@ fig, ax = plt.subplots(subplot_kw={"projection": ccrs.PlateCarree()}, figsize=(8
 ax.add_feature(cfeature.COASTLINE)
 ax.add_feature(cfeature.BORDERS, linestyle=":")
 ax.set_extent([-82, -81, 26.068, 26.6])
-cmap = LinearSegmentedColormap.from_list("blue_gradient", ["purple", "blue", "lightblue", "green", "orange"])
+cmap = LinearSegmentedColormap.from_list("blue_gradient", ["purple", "blue", "lightblue", "green", "lightgreen"])
 SL = ax.scatter(longSL, latSL, cmap = cmap, c = time, label="Spider Lightning", s=5)
 # Add legend and title
 text = fig.text(0.5, 0.02, "Click a point to see intensity", ha='center', fontsize=12, color='black')
