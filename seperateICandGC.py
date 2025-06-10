@@ -10,7 +10,7 @@ import ICandGCHandler
 import sorter
 
 SL = True
-Gradient_Pink = True
+Gradient_Pink = False
 IC = True
 GC = True
 NonSLname = "DATA"
@@ -22,25 +22,24 @@ conditions = [
     ("IC", IC),
 ]
 
-graphName = "Lightning graph with minute around " + ", ".join([msg for msg, condition in conditions if condition])
+graphName = "Lightning graph with timeframe 00 55 34.4-00 55 35.1"
 
 
 
 csv_file = r"C:\Users\Samuel Halperin\OneDrive\Documents\GitHub\lightening_plotting\info_storage\GLM_9_7_filtered2.csv"
 
 dataSL = sorter.filter_and_sort_csv(csv_file, "hour", "minute", "second", "millisecond", TIME_FRAME[0], TIME_FRAME[1], ascending=True)
-incl = []
-if GC:
-    incl.append("GC")
-if IC:
-    incl.append("IC")
-print(incl)
+
 minutes = ["50", "51", "52", "53", "54", "55", "56", "57", "58", "59"]
 minutes = ["55", "56"]
-dataICandGC = ICandGCHandler.ICandGC(incl, 
+dataIC = ICandGCHandler.ICandGC("IC", 
                                      minutes,
                                        3, 5)
-time, lat, long, Ltype, Current = dataICandGC
+dataGC = ICandGCHandler.ICandGC("GC", 
+                                     minutes,
+                                       3, 5)
+timeI, latI, longI, LtypeI, CurrentI = dataIC
+timeG, latG, longG, LtypeG, CurrentG = dataGC
 
 hSL = dataSL["hour"]
 mSL = dataSL["minute"]
@@ -71,7 +70,8 @@ ax.add_feature(cfeature.BORDERS, linestyle=":")
 ax.set_extent([-82, -81, 25, 26.6])
 
 # Scatter different datasets with different colors
-C = ax.scatter(long, lat, c = time, norm = norm , s=5)
+IC = ax.scatter(longI, latI, c = "green", label="IC", s=5)
+GC = ax.scatter(longG, latG, c = "blue", label="GC", s=5)
 pink_cmap = LinearSegmentedColormap.from_list("pink_gradient", ["pink", "deeppink", "mediumvioletred"])
 if not Gradient_Pink:
     pink_cmap = LinearSegmentedColormap.from_list("pink_gradient", ["deeppink", "deeppink"])
@@ -107,10 +107,9 @@ plt.gcf().canvas.mpl_connect('button_press_event', on_click)
 
 plt.legend()
 
-plt.colorbar(C, label= "Time in minutes of "+ NonSLname+" (m)")
 if SL and Gradient_Pink:
     plt.colorbar(SL, label = "Time in seconds of SL (s)")
 plt.title("Scatter Plot of "+graphName)
 
-plt.savefig("./pictures/Version 4/"+graphName+".png")
+plt.savefig("./pictures/Version 6/"+graphName+".png")
 plt.show()
