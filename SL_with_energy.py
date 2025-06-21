@@ -25,7 +25,7 @@ fig, ax = plt.subplots(subplot_kw={"projection": ccrs.PlateCarree()}, figsize=(8
 ax.add_feature(cfeature.COASTLINE)
 ax.add_feature(cfeature.BORDERS, linestyle=":")
 ax.set_extent([-81.7, -81.3, 26.1, 26.5])
-SL = ax.scatter(longSL, latSL, cmap = "plasma", c = current, label="Spider Lightning", s=5)
+SL = ax.scatter(longSL, latSL, cmap = "cool", c = current, label="Spider Lightning", s=5)
 # Add legend and title
 text = fig.text(0.5, 0.02, "Click a point to see intensity", ha='center', fontsize=12, color='black')
 
