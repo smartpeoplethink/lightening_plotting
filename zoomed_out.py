@@ -1,8 +1,7 @@
-TIME_FRAME = ["00:55:34.4","00:55:35.1"]
-TIME_FRAMEO = ["00:57:50.8", "00:57:52.2"]
-# Start_Time = "50:00"
-# End_Time = "58:00"
-#IC = green; CG = Blue
+SL_TIME_FRAME = ["00:55:34.4","00:55:35.1"]
+SL_TIME_FRAMEO = ["00:57:50.8", "00:57:52.2"]
+
+NLDN_TIME_FRAME = ["55:33.4", "55:36.1"]
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 import matplotlib.patches as patches
@@ -10,6 +9,7 @@ import numpy as np
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 import pandas as pd
+import ICandCGPandasHandler
 import ICandGCHandler
 import sorter
 Camera = [-81.8, 26.37]
@@ -37,19 +37,8 @@ locationZoomOut = [-83, -80, 25, 28]
 csv_file = r"C:\Users\Samuel Halperin\OneDrive\Documents\GitHub\lightening_plotting\info_storage\GLM_9_7_filtered2.csv"
 # Start_Time = pd.to_datetime(Start_Time, format="%M:%S.%f")
 # End_Time = pd.to_datetime(End_Time, format="%M:%S.%f")
-dataSL = sorter.filter_and_sort_csv(csv_file, "hour", "minute", "second", "millisecond", TIME_FRAME[0], TIME_FRAME[1], ascending=True)
-incl = []
-if GC:
-    incl.append("GC")
-if IC:
-    incl.append("IC")
-print(incl)
-minutes = ["50", "51", "52", "53", "54", "55", "56", "57", "58", "59"]
-# minutes = ["55"]
-dataICandGC = ICandGCHandler.ICandGC(incl, 
-                                     minutes,
-                                       0, 60)
-time, lat, long, Ltype, Current = dataICandGC
+dataSL = sorter.filter_and_sort_csv(csv_file, "hour", "minute", "second", "millisecond", SL_TIME_FRAME[0], SL_TIME_FRAME[1], ascending=True)
+dataICandGC = ICandCGPandasHandler.load_and_filter_ualf_files(NLDN_TIME_FRAME, [0,1])
 
 hSL = dataSL["hour"]
 mSL = dataSL["minute"]
@@ -74,7 +63,11 @@ norm = plt.Normalize(50,59)
 # Create a map with Cartopy
 fig, ax = plt.subplots(subplot_kw={"projection": ccrs.PlateCarree()}, figsize=(8, 6))
 
-# Add coastlines and features
+ax.add_feature(cfeature.OCEAN)
+ax.add_feature(cfeature.LAND)
+ax.add_feature(cfeature.LAKES)
+ax.add_feature(cfeature.RIVERS)
+ax.add_feature(cfeature.BORDERS)
 ax.add_feature(cfeature.COASTLINE)
 ax.add_feature(cfeature.BORDERS, linestyle=":")
 ax.set_extent(locationZoomOut)
@@ -86,7 +79,7 @@ if not Gradient_Pink:
     pink_cmap = LinearSegmentedColormap.from_list("pink_gradient", ["deeppink", "deeppink"])
 SL = ax.scatter(longSL, latSL, cmap = pink_cmap, c = timeSL, label="Spider Lightning", s=6)
 # Add legend and title
-C = ax.scatter(long, lat, c = time, s=6)
+C = ax.scatter(dataICandGC["Longitude"].to_list(), dataICandGC["Latitude"].to_list(), c = dataICandGC["TotalTimeMinutes"].to_list(), s=6)
 ax.scatter(Camera[0], Camera[1], color = "black")
 text = fig.text(0.5, 0.02, "Click a point to see intensity", ha='center', fontsize=12, color='black')
 
