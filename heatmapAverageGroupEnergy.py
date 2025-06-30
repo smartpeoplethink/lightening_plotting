@@ -7,6 +7,11 @@ import cartopy.feature as cfeature
 import sorter
 from scipy.ndimage import gaussian_filter
 
+# Define the custom colormap
+custom_cmap = LinearSegmentedColormap.from_list(
+    'lightblue_yellow_red',
+    ['lightblue', 'green', 'yellow', 'orange', 'red']
+)
 
 TIME_FRAMEO = ["00:55:34.4","00:55:35.1"]
 TIME_FRAME = ["00:57:50.8", "00:57:52.2"]
@@ -48,10 +53,10 @@ data = bins / quantity
 
 # Apply Gaussian blur
 blurred_data = gaussian_filter(data, sigma=3) 
-im = ax.imshow(blurred_data, cmap = "cool")
+im = ax.imshow(blurred_data, cmap = custom_cmap)
 cbar = fig.colorbar(im, ax=ax)
 cbar.set_label("Group Energy 10^-15 Joules")
-ax.scatter(longSL, latSL, c = "yellow", s = 5)
+ax.scatter(longSL, latSL, c = "white", s = 5)
 im.set_extent(area)
 fig.tight_layout()
 plt.show()
