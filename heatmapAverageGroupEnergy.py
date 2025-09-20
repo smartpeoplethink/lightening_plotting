@@ -10,7 +10,7 @@ from scipy.ndimage import gaussian_filter
 # Define the custom colormap
 custom_cmap = LinearSegmentedColormap.from_list(
     'lightblue_yellow_red',
-    ['lightblue', 'green', 'yellow', 'orange', 'red']
+    ['blue', 'green', 'yellow', 'orange', 'red']
 )
 
 TIME_FRAMEO = ["00:55:34.4","00:55:35.1"]
@@ -39,9 +39,9 @@ fig, ax = plt.subplots()
 # Loop over data dimensions and create text annotations.
 for i in range(len(longSL)):
     distFromLeft = (longSL[i]-area[0])/long_width #scale from 0-1
-    indexlong = round(distFromLeft*bin_width)
+    indexlong = int(distFromLeft*bin_width)
     distFromBottom = (latSL[i]-area[2])/lat_width #scale from 0-1
-    indexlat = round((1-distFromBottom)*bin_width)
+    indexlat = int((1-distFromBottom)*bin_width)
     
     bins[indexlat][indexlong]+=current[i]*10**15
     if (quantity[indexlat][indexlong] == -1):
@@ -52,11 +52,11 @@ for i in range(len(longSL)):
 data = bins / quantity
 
 # Apply Gaussian blur
-blurred_data = gaussian_filter(data, sigma=3) 
-im = ax.imshow(blurred_data, cmap = custom_cmap)
+data = gaussian_filter(data, sigma=3) 
+im = ax.imshow(data, cmap = custom_cmap)
 cbar = fig.colorbar(im, ax=ax)
 cbar.set_label("Group Energy 10^-15 Joules")
-ax.scatter(longSL, latSL, c = "white", s = 5)
+ax.scatter(longSL, latSL, c = "pink", s = 5)
 im.set_extent(area)
 fig.tight_layout()
 plt.show()
