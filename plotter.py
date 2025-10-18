@@ -14,9 +14,9 @@ import ICandGCHandler
 import sorter
 
 SL = True
-Gradient_Pink = True
-IC = True
-GC = True
+Gradient_Pink = False
+IC = False
+GC = False
 NonSLname = "DATA"
 
 conditions = [
