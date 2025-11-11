@@ -43,20 +43,27 @@ ax.set_extent([-81.7, -81.3, 26.1, 26.5])
 
 # Scatter different datasets with different colors
 
-SL = ax.scatter(longSL55, latSL55, color = "Red", label="Spider Lightning", s=6)
+# SL = ax.scatter(longSL55, latSL55, color = "Red", label="Spider Lightning", s=6)
 
 SL = ax.scatter(longSL57, latSL57, color = "Blue", label="Spider Lightning", s=6)
 
+# Remove all spines
+for spine in ax.spines.values():
+    spine.set_visible(False)
 
-gl = ax.gridlines(draw_labels=True, linestyle='--', alpha=0.5)
+
+gl = ax.gridlines(draw_labels=False, linestyle='', alpha=0)
 gl.top_labels = False
 gl.right_labels = False
 gl.xlabel_style = {'size': 12}
 gl.ylabel_style = {'size': 12}
 
+gl.grid = False
+gl.Axes = False
+gl.Title = False
+gl.Outline = False
 
+plt.title("")
 
-plt.title("Scatter Plot of "+graphName)
-
-plt.savefig("./pictures/Version 4/"+graphName+".png")
+plt.savefig("./pictures/Version 18/Blue57.png", transparent = True)
 plt.show()

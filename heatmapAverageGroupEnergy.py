@@ -26,7 +26,7 @@ latSL = np.array(dataSL["lat"])
 current = np.array(dataSL["current"])
 
 area = [-81.7, -81.3, 26.1, 26.5]
-bin_width = 100
+bin_width = 20
 long_width = (area[1]-area[0])
 lat_width = (area[3]-area[2])
 bins = np.array([[0]*bin_width]*bin_width)
