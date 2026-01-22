@@ -13,8 +13,8 @@ custom_cmap = LinearSegmentedColormap.from_list(
     ['blue', 'green', 'yellow', 'orange', 'red']
 )
 
-TIME_FRAMEO = ["00:55:34.4","00:55:35.1"]
-TIME_FRAME = ["00:57:50.8", "00:57:52.2"]
+TIME_FRAME = ["00:55:34.4","00:55:35.1"]
+TIME_FRAMEO = ["00:57:50.8", "00:57:52.2"]
 
 
 csv_file = r"C:\Users\Samuel Halperin\OneDrive\Documents\GitHub\lightening_plotting\info_storage\GLM_9_7_filtered2.csv"
@@ -25,7 +25,7 @@ longSL = np.array(dataSL["long"])
 latSL = np.array(dataSL["lat"])
 current = np.array(dataSL["current"])
 
-area = [-81.7, -81.5, 26.2, 26.4]#[-81.7, -81.3, 26.1, 26.5]
+area = [-81.63, -81.43, 26.13, 26.33]#[-81.7, -81.3, 26.1, 26.5]
 bin_width = 30 #was 20
 long_width = (area[1]-area[0])
 lat_width = (area[3]-area[2])
