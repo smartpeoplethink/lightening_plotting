@@ -3,5 +3,9 @@
 info.csv
 /info_storage
 /Pictures
+/Pictures (As Sent)
 *.exe
 *.obj
+*.png
+*.jpeg
+*.jpg
