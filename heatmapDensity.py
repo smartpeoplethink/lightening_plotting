@@ -18,16 +18,16 @@ TIME_FRAMEO = ["00:55:34.4","00:55:35.1"]
 TIME_FRAME = ["00:57:50.8", "00:57:52.2"]
 
 
-csv_file = r"C:\Users\Samuel Halperin\OneDrive\Documents\GitHub\lightening_plotting\info_storage\GLM_9_7_filtered2.csv"
+csv_file = r"/home/samuel-halperin/Documents/Programming/lightening_plotting/info_storage/GLM_9_7_filtered2.csv"
 
 dataSL = sorter.filter_and_sort_csv(csv_file, "hour", "minute", "second", "millisecond", TIME_FRAME[0], TIME_FRAME[1], ascending=True)
 
 longSL = np.array(dataSL["long"])
 latSL = np.array(dataSL["lat"])
-current = np.array(dataSL["current"])
+current = np.array(dataSL["groupenergy"])
 
 area = [-81.7, -81.3, 26.1, 26.5]
-bin_quantity = 100
+bin_quantity = 20
 long_width = (area[1]-area[0])
 lat_width = (area[3]-area[2])
 quantity = np.array([[0]*bin_quantity]*bin_quantity)
@@ -52,7 +52,7 @@ data = quantity/(areaLat*areaLong)
 # norm = plt.Normalize(0, 0.1)
 # Apply Gaussian blur
 
-data = gaussian_filter(data, sigma=3) 
+data = gaussian_filter(data, sigma=0) 
 im = ax.imshow(data, cmap = custom_cmap)
 cbar = fig.colorbar(im, ax=ax)
 ax.scatter(longSL, latSL, c = "white", s = 5)

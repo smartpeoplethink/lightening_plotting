@@ -39,7 +39,8 @@ PATCHESENDLAT = PATCHESENDLAT55 if TimeFrame55 else PATCHESENDLAT57
 
 
 COLORS = ["Black", "deepskyblue", "chartreuse", "aqua", "gold"]
-csv_file = r"C:\Users\Samuel Halperin\OneDrive\Documents\GitHub\lightening_plotting\info_storage\GLM_9_7_filtered2.csv"
+
+csv_file = r"/home/samuel-halperin/Documents/Programming/lightening_plotting/info_storage/GLM_9_7_filtered2.csv"
 
 dataSL = sorter.filter_and_sort_csv(csv_file, "hour", "minute", "second", "millisecond", TIME_FRAME[0], TIME_FRAME[1], ascending=True)
 dataSL["time"] = dataSL["second"]+dataSL["millisecond"]/1000
@@ -49,7 +50,7 @@ dataSL = dataSL.sort_values(by = ["time"]).reset_index(drop=True)
 longSL = np.array(dataSL["long"])
 latSL = np.array(dataSL["lat"])
 time = np.array(dataSL["second"]+dataSL["millisecond"]/1000)
-current = np.array(dataSL["current"])
+current = np.array(dataSL["groupenergy"])
 
 # Create a map with Cartopy
 fig, ax = plt.subplots(subplot_kw={"projection": ccrs.PlateCarree()}, figsize=(8, 6))
@@ -140,5 +141,5 @@ for i in range(5):
 
 
 plt.colorbar(SL, label = "The time of the lighting strikes")
-plt.savefig("./pictures/Version 3/spider_zoom_in_57.png")
+plt.savefig("./Pictures/Test/test.png")
 plt.show()

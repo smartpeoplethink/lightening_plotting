@@ -6,6 +6,10 @@ import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 import sorter
 from scipy.ndimage import gaussian_filter
+# from matplotlib.ticker import FuncFormatter
+# from matplotlib.ticker import MultipleLocator
+import matplotlib.ticker as ticker
+from pathlib import Path
 
 # Define the custom colormap
 custom_cmap = LinearSegmentedColormap.from_list(
@@ -16,17 +20,17 @@ custom_cmap = LinearSegmentedColormap.from_list(
 TIME_FRAME = ["00:55:34.4","00:55:35.1"]
 TIME_FRAMEO = ["00:57:50.8", "00:57:52.2"]
 
-
-csv_file = r"C:\Users\Samuel Halperin\OneDrive\Documents\GitHub\lightening_plotting\info_storage\GLM_9_7_filtered2.csv"
+home_dir = r"//"
+csv_file = home_dir+r"info_storage/GLM_9_7_filtered2.csv"
 
 dataSL = sorter.filter_and_sort_csv(csv_file, "hour", "minute", "second", "millisecond", TIME_FRAME[0], TIME_FRAME[1], ascending=True)
 
 longSL = np.array(dataSL["long"])
 latSL = np.array(dataSL["lat"])
-current = np.array(dataSL["current"])
+current = np.array(dataSL["groupenergy"])
 
-area = [-81.63, -81.43, 26.13, 26.33]#[-81.7, -81.3, 26.1, 26.5]
-bin_width = 30 #was 20
+area = [-81.7, -81.3, 26.1, 26.5]
+bin_width = 100 #was 20
 long_width = (area[1]-area[0])
 lat_width = (area[3]-area[2])
 bins = np.array([[0]*bin_width]*bin_width)
@@ -52,11 +56,39 @@ for i in range(len(longSL)):
 data = bins / quantity
 
 # Apply Gaussian blur
-data = gaussian_filter(data, sigma=1) 
-im = ax.imshow(data, cmap = custom_cmap)
+data = gaussian_filter(data, sigma=3)
+
+im = ax.imshow(data, cmap=custom_cmap)
+
 cbar = fig.colorbar(im, ax=ax)
-cbar.set_label("Group Energy 10^-15 Joules")
-ax.scatter(longSL, latSL, c = "pink", s = 5)
+cbar.ax.set_title(r'$\times10^{-15}$', pad=8)
+cbar.set_label("Group Energy (J)")
+
+ax.scatter(longSL, latSL, c = "white", s = 5)
+
+
+
+# Every 0.1°
+ax.xaxis.set_major_locator(ticker.MultipleLocator(0.1))
+ax.yaxis.set_major_locator(ticker.MultipleLocator(0.05))
+ax.xaxis.set_major_formatter(
+    ticker.FuncFormatter(lambda x, pos: f"{abs(x):.1f}")
+)
+ax.yaxis.set_major_formatter(
+    ticker.FuncFormatter(lambda y, pos: f"{y:.2f}")
+)
+
+
 im.set_extent(area)
 fig.tight_layout()
 plt.show()
+
+
+save_dir = Path(home_dir+"Pictures/Version 20")
+name = "groupenergyheatmap"
+
+i = 1
+while (save_dir / f"{name}_{i}.png").exists():
+    i += 1
+
+fig.savefig(save_dir / f"{name}_{i}.png", dpi=300, bbox_inches="tight")

@@ -13,7 +13,7 @@ TIME_FRAME = ["00:55:34.4","00:55:35.1"]
 TIME_FRAMEO = ["00:57:50.8", "00:57:52.2"]
 
 
-csv_file = r"C:\Users\Samuel Halperin\OneDrive\Documents\GitHub\lightening_plotting\info_storage\GLM_9_7_filtered2.csv"
+csv_file = r"/home/samuel-halperin/Documents/Programming/lightening_plotting/info_storage/GLM_9_7_filtered2.csv"
 
 dataSL = sorter.filter_and_sort_csv(csv_file, "hour", "minute", "second", "millisecond", TIME_FRAME[0], TIME_FRAME[1], ascending=True)
 
@@ -58,5 +58,5 @@ gl.xlabel_style = {'size': 12}
 gl.ylabel_style = {'size': 12}
 
 plt.colorbar(SL, label = "The time of the lighting strikes")
-plt.savefig("./pictures/Version 3/spider_zoom_in_57.png")
+plt.savefig("./Pictures/Test/test.png")
 plt.show()

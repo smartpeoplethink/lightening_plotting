@@ -9,17 +9,19 @@ from scipy.ndimage import gaussian_filter
 
 
 
-TIME_FRAME = ["00:55:34.4","00:55:35.1"]
-TIME_FRAMEO = ["00:57:50.8", "00:57:52.2"]
+TIME_FRAMEO = ["00:55:34.4","00:55:35.1"]
+TIME_FRAME = ["00:57:50.8", "00:57:52.2"]
 
-
-csv_file = r"C:\Users\Samuel Halperin\OneDrive\Documents\GitHub\lightening_plotting\info_storage\GLM_9_7_filtered2.csv"
+csv_file = r"/home/samuel-halperin/Documents/Programming/lightening_plotting/info_storage/GLM_9_7_filtered2.csv"
 
 dataSL = sorter.filter_and_sort_csv(csv_file, "hour", "minute", "second", "millisecond", TIME_FRAME[0], TIME_FRAME[1], ascending=True)
 
 longSL = np.array(dataSL["long"])
 latSL = np.array(dataSL["lat"])
-current = np.array(dataSL["current"])
+groupenergy = np.array(dataSL["groupenergy"])
+binIndex = np.array(len(longSL))
+binDensity = np.array(len(longSL))
+
 
 area = [-81.7, -81.3, 26.1, 26.5]
 bin_quantity = 50
@@ -39,8 +41,9 @@ for i in range(len(longSL)):
     distFromBottom = (latSL[i]-area[2])/lat_width #scale from 0-1
     indexlat = int((1-distFromBottom)*bin_quantity)
     
-    bins[indexlat][indexlong]+=current[i]*10**15
+    bins[indexlat][indexlong]+=groupenergy[i]*10**15
     quantity[indexlat][indexlong]+=1
+    binIndex = np.append(binIndex, indexlat*50+indexlong)
 
 
 
@@ -53,7 +56,11 @@ areaLat = lat_width/bin_quantity
 
 GroupEnergy = result.ravel()
 Density = quantity.ravel()/ (areaLat*areaLong)
-# Apply Gaussian blur
+
+
+
+
+
 ax.scatter(Density, GroupEnergy)
 
 ax.set_xlabel("Density (occurences per degrees squared)")

@@ -22,7 +22,7 @@ graphName = "Lightning graph"
 
 
 
-csv_file = r"C:\Users\Samuel Halperin\OneDrive - Cedarville University\Documents\GitHub\lightening_plotting\info_storage\GLM_9_7_filtered2.csv"
+csv_file = r"/home/samuel-halperin/Documents/Programming/lightening_plotting/info_storage/GLM_9_7_filtered2.csv"
 
 dataSL55 = sorter.filter_and_sort_csv(csv_file, "hour", "minute", "second", "millisecond", SL_TIME_FRAME55[0], SL_TIME_FRAME55[1], ascending=True)
 dataSL57 = sorter.filter_and_sort_csv(csv_file, "hour", "minute", "second", "millisecond", SL_TIME_FRAME57[0], SL_TIME_FRAME57[1], ascending=True)
@@ -65,5 +65,5 @@ gl.Outline = True
 
 plt.title("")
 
-plt.savefig("./pictures/Version 20/NormalCombinationOfBlue57andPink55.png", transparent = False)
+##plt.savefig("./pictures/Version 20/NormalCombinationOfBlue57andPink55.png", transparent = False)
 plt.show()
